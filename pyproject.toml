@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "cadastro"
+version = "0.1.0"
+description = "Sistema de cadastro de pessoas para receber abastecimento de água por caminhão carro pipa"
+authors = ["Francelmo <francelmo87@hotmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+django = "^5.1.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
