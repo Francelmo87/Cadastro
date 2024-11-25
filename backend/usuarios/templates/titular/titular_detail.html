@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{object}}
+    <span class="pull-right">
+      <a href="{% url 'usuarios:titular_list' %}">
+        <button type="button" class="btn btn-info">
+            <span class="fa fa-undo"></span> Voltar
+        </button>
+      </a>
+      <a href="{% url 'usuarios:titular_edit' object.pk %}">
+        <button type="button" class="btn btn-warning">
+            <span class="fa fa-pencil "></span> Editar
+        </button>
+      </a>
+    </span>
+</h1>
+
+<div class="col-sm-6">
+    <table class="table table-user-information">
+      <tbody>
+        <tr>
+            <th class="text-right">Ativo</th>
+                <td>
+                    {% if object.ativo %}
+                      <i class="fa fa-check-circle ok"></i>
+                    {% else %}
+                      <i class="fa fa-minus-circle no"></i>
+                    {% endif %}
+                </td>
+        </tr>
+        <tr>
+          <th class="text-right">Validade: </th>
+          <td>{{ object.dt_validade }}</td>
+        </tr>
+        <tr>
+          <th class="text-right">CPF:</th>
+          <td>{{ object.cpf }}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+{% if object.ativo %}
+<div class="col-sm-12">
+    <span class="pull-right">
+      <a href="{ url 'pedido:pedido_add'%}">
+        <button type="button" class="btn btn-success">
+            <span class="fa fa-undo"></span> Solicitar
+        </button>
+      </a>
+    </span>
+</div>
+{% endif %}
+      <br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text_center">Entregue em</th>
+                <th class="text_center">Cod_Cisterna</th>
+                <th class="text_center">Volume</th>
+                <th class="text_center">Entregue</th>
+            </tr>
+        </thead>
+
+        <tbody>
+             {% for obj in object.titulares.all %}
+             {% if obj.entregue == True %}
+
+                <tr>
+                    <td>{{obj.modified}}</td>
+                    <td>{{obj.cisterna}}</td>
+                    <td>{{obj.volume}}</td>
+                    <td>
+                        {% if obj.entregue %}
+                            <i class="fa fa-check-circle ok"></i>
+                        {% else %}
+                            <i class="fa fa-minus-circle no"></i>
+                        {% endif %}
+                    </td>
+                </tr>
+             {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock content %}
