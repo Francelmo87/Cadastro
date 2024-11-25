@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2>Lista de Membros
+        <span class="pull-right">
+              <a href="{% url 'usuarios:titular_list' %}">
+                <button type="button" class="btn btn-warning">
+                    <span class="fa fa-undo"></span> Voltar
+                </button>
+            </a>
+        </span>
+    </h2>
+    {% if dependente_list %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text_center">Titular</th>
+                <th class="text_center">Membros</th>
+                <th class="text_center">CPF</th>
+                <th class="text_center">Parentesco</th>
+                <th class="text_center">Idade</th>
+                <th class="text_center">Ocupação</th>
+                <th class="text_center">Renda</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for membro in dependente_list %}
+            <tr>
+                <td>{{membro.titular.nome}}</td>
+                <td>{{membro.nome}}</td>
+                <td>{{membro.cpf}}</td>
+                <td>{{membro.parentesco}}</td>
+                <td>{{membro.idade}}</td>
+                <td>{{membro.ocupacao}}</td>
+                <td>{{membro.renda}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="alert alert_warning">Sem itens na lista</p>
+    {% endif %}
+</div>
+    {% include "includes/pagination.html" %}
+
+{% endblock content %}
