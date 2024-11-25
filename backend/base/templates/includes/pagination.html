@@ -1,0 +1,29 @@
+<div class="row text-center">
+    <div class="col-lg-12">
+      <ul class="pagination justify-content-center" style="margin:20px 0">
+        {% if titular_list.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{ titular_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo;</a></li>
+        {% endif %}
+  
+        {% for pg in titular_list.paginator.page_range %}
+          <!-- Sempre mostra as 3 primeiras e 3 últimas páginas -->
+          {% if pg == 1 or pg == 2 or pg == 3 or pg == titular_list.paginator.num_pages or pg == titular_list.paginator.num_pages|add:'-1' or pg == titular_list.paginator.num_pages|add:'-2' %}
+            <li class="page-item"><a class="page-link" href="?page={{ pg }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ pg }}</a></li>
+          {% else %}
+            {% if titular_list.number == pg %}
+              <li class="page-item active"><a class="page-link" href="?page={{ pg }}">{{ pg }}</a></li>
+            {% elif pg > titular_list.number|add:'-4' and pg < titular_list.number|add:'4' %}
+              <!-- Mostra 3 páginas antes e 3 páginas depois da atual -->
+              <li class="page-item"><a class="page-link" href="?page={{ pg }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ pg }}</a></li>
+            {% elif pg == titular_list.number|add:'-4' or pg == titular_list.number|add:'4' %}
+              <li class="page-item"><a class="page-link" href="">...</a></li>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+  
+        {% if titular_list.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ titular_list.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
