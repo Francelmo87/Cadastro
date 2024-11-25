@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1> Endereço do usuário
+  <span class="pull-right">
+    <a href="{% url 'usuarios:titular_list' %}">
+      <button type="button" class="btn btn-warning">
+        <span class="fa fa-undo"></span> Voltar
+      </button>
+    </a>
+  </span>
+</h1>
+
+
+<div class="col-sm-6">
+    <table class="table table-user-information">
+      <tbody>
+        {% for endereco in endereco_list %}
+        <tr>
+          <th class="text-right"><h2>Titular</h2></th>
+          <td><h2>{{ endereco.titular.nome}}</h2></td>
+        </tr>
+
+        <tr>
+          <th class="text-right">Distrito</th>
+          <td>{{ endereco.distrito }}</td>
+        </tr>
+        <tr>
+          <th class="text-right">Localidade</th>
+          <td>{{ endereco.localidade }}</td>
+        </tr>
+        <tr>
+          <th class="text-right">Geolocalização</th>
+          <td>{{ endereco.geolocalizacao }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  {% endfor %}
+    </tbody>
+  </table>
+{% endblock content %}
