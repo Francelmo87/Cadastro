@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     # my apps
     'backend.base',
     'backend.usuarios',
+    'backend.pedido',
 ]
 
 
