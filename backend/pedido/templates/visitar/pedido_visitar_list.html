@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-3">
+      <form action="." method="GET" class="d-flex">
+        <input type="text" id="search" name="search" class="form-control me-2" placeholder="Busca">
+        <input type="submit" class="btn btn-primary" style="margin-left: 10px;" value="OK">
+      </form>
+    </div>
+</div>
+
+<div class="page-header">
+    <h2>Pedidos {{ titulo }}</h2>
+    <hr>
+    {% if object_list %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text_center">Identificador</th>
+                <th class="text_center">Titular</th>
+                <th class="text_center">Nº Cisterna</th>
+                <th class="text_center">Volume</th>
+                <th class="text_center">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+                    <tr>
+                        <td>{{object.codigo_formated}}</td>
+                        <td> <a href="{% url 'pedido:pedido_detail' object.pk %}">{{object.titular.nome}}</a> </td>
+                        <td>{{object.cisterna}}</td>
+                        <td>{{object.volume}}</td>
+                        <td>{{object.get_status_display}}</td>
+                    </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="alert alert_warning">Sem itens na lista</p>
+    {% endif %}
+</div>
+
+    {% include "includes/pagination.html" %}
+
+{% endblock content %}

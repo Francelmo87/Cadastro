@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% if object.status == 'V' %}
+    <span class="pull-right">
+      <a href="{% url 'pedido:pedido_visitar_list' %}">
+        <button type="button" class="btn btn-danger">
+            <span class="fa fa-undo "></span> voltar
+        </button>
+      </a>
+    </span>
+  {% else %}
+    <span class="pull-right">
+      <a href="{% url 'pedido:pedido_abastecer_list' %}">
+        <button type="button" class="btn btn-danger">
+            <span class="fa fa-undo "></span> voltar
+        </button>
+      </a>
+    </span>
+  {% endif %}
+
+  {% if object.status == 'V' %}
+    <h1>Visitar: {{ object }}</h1>
+  {% else %}
+    <h1>Abastecer: {{ object }}</h1>
+  {% endif %}
+
+<div class="col-sm-6">
+  <table class="table table-user-information">
+    <tbody>
+      <tr>
+        <th class="text-right">Codigo</th>
+        <td>{{ object.codigo_formated }}</td>
+      </tr>
+      <tr>
+        <th class="text-right">Cisterna</th>
+        <td>{{ object.cisterna }}</td>
+      </tr>
+      <tr>
+        <th class="text-right">Volume</th>
+        <td>{{ object.volume }}</td>
+      </tr>
+      <tr>
+        <th class="text-right">Situação</th>
+        <td> A {{ object.get_status_display }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<form method="POST" action="{% url 'pedido:pedido_detail' object.pk %}">
+    {% csrf_token %}
+
+    {% if object.status == 'V' %}
+    <span class="pull-right">
+      <a href="{% url 'pedido:pedido_visitar_list' %}">
+        <button type="submit" class="btn btn-success">
+            <span class="fa fa-check"></span> Confirmar
+        </button>
+      </a>
+    </span>
+  {% else %}
+    <span class="pull-right">
+      <a href="{% url 'pedido:pedido_abastecer_list'%}">
+        <button type="submit" class="btn btn-success">
+            <span class="fa fa-check "></span> Confirmar
+        </button>
+      </a>
+    </span>
+  {% endif %}
+</form>
+
+{% endblock content %}

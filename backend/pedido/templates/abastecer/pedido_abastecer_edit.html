@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2>Confirmar o abastecimento</h2>
+<hr>
+
+<form method="POST" novalidate>
+    {% csrf_token %}
+
+    <div>
+
+        {{ form|crispy }}
+
+    </div>
+
+
+    <div class="row float-right">
+      <div class="col-sm-12" style="margin-top: 10px;">
+        <div class="form-group-inline buttons">
+          <button class="btn btn-primary" value="Save">
+            <i class="fa fa-floppy-o"></i>
+            Salvar
+          </button>
+          <a href="{% url 'pedido:pedido_abastecer_list' %}" class="btn btn-danger">
+            <i class="fa fa-times"></i>
+            Cancelar
+          </a>
+        </div>
+      </div>
+    </div>
+</form>
+
+{% endblock %}
+
+
+{% block js %}
+
+{% endblock js %}
