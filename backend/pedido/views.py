@@ -7,7 +7,7 @@ from django.urls import reverse
 
 
 
-from .forms import PedidoForm, PedidoVisitarForm, PedidoAbastecerForm
+from .forms import PedidoForm
 from .models import Pedido, PedidoVisitar, PedidoAbastecer
 
 
@@ -18,27 +18,6 @@ def pedido_list_all(request):
     context = {
         'object_list': objects,
         'url_add': 'pedido:pedido_add'
-    }
-    return render(request, template_name, context)
-
-
-@login_required
-def pedido_detail(request, pk):
-    template_name = 'pedido_detail.html'
-    obj = Pedido.objects.get(pk=pk)
-
-    if request.method == 'POST':
-        if obj.status == 'V':
-            obj.status = 'A'
-            obj.save()
-            return HttpResponseRedirect(reverse('pedido:pedido_visitar_list'))
-        else:
-            obj.entregue = True
-            obj.save()
-            return HttpResponseRedirect(reverse('pedido:pedido_abastecer_list'))
-    context = {
-        'object': obj,
-        'url_add': 'pedido:visitar/pedido_list_all'
     }
     return render(request, template_name, context)
 
@@ -71,6 +50,26 @@ def pedido_visitar_list(request):
     }
     return render(request, template_name, context)
 
+@login_required
+def pedido_visitar_detail(request, pk):
+    template_name = 'visitar/pedido_visitar_detail.html'
+    obj = Pedido.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        action = request.POST.get('action')  # Identifica a ação desejada
+        if action == 'confirmar' and obj.status == 'V' or 'P':
+            obj.status = 'A'  # Muda para Aprovado
+            obj.save()
+        elif action == 'pendente' and obj.status == 'V':
+            obj.status = 'P'  # Muda para Pendente
+            obj.save()
+        return HttpResponseRedirect(reverse('pedido:pedido_visitar_list'))
+
+    context = {
+        'object': obj,
+        'url_add': 'pedido:visitar/pedido_list_all'
+    }
+    return render(request, template_name, context)
 
 ###################################################################################
 @login_required

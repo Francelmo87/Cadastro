@@ -9,6 +9,7 @@ from .managers import PedidoVisitarManager, PedidoAbastecerManager
 STATUS = (
     ('V', 'Visitar'),
     ('A', 'Abastecer'),
+    ('P', 'Pendente'),
 )
 
 
@@ -35,7 +36,6 @@ class Pedido(TimeStampedModel):
     def codigo_formated(self):
         if self.pk:
             return str(self.pk).zfill(3)
-
 
 class PedidoVisitar(Pedido):
 
