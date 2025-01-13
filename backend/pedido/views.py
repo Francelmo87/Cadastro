@@ -53,21 +53,22 @@ def pedido_visitar_list(request):
 @login_required
 def pedido_visitar_detail(request, pk):
     template_name = 'visitar/pedido_visitar_detail.html'
-    obj = Pedido.objects.get(pk=pk)
+    obj = Pedido.objects.get(pk=pk, tipo='V')
 
     if request.method == 'POST':
-        action = request.POST.get('action')  # Identifica a ação desejada
-        if action == 'confirmar' and obj.status == 'V' or 'P':
-            obj.status = 'A'  # Muda para Aprovado
+        action = request.POST.get('action')  
+        if action == 'pendente':
+            obj.status = 'P'  
+            obj.tipo = 'V'  
             obj.save()
-        elif action == 'pendente' and obj.status == 'V':
-            obj.status = 'P'  # Muda para Pendente
+        elif action == 'confirmar':
+            obj.status = 'A'  # Muda para Pendente
+            obj.tipo = 'A'  # Muda para Pendente
             obj.save()
         return HttpResponseRedirect(reverse('pedido:pedido_visitar_list'))
 
     context = {
         'object': obj,
-        'url_add': 'pedido:visitar/pedido_list_all'
     }
     return render(request, template_name, context)
 
@@ -75,10 +76,32 @@ def pedido_visitar_detail(request, pk):
 @login_required
 def pedido_abastecer_list(request):
     template_name = 'abastecer/pedido_abastecer_list.html'
-    objects = PedidoAbastecer.objects.all()
+    objects = PedidoAbastecer.objects.filter(tipo='A')
     context = {
         'object_list': objects,
         'titulo': 'a abastecer',
         'url_add': 'pedido:pedido_list_all'
+    }
+    return render(request, template_name, context)
+
+@login_required
+def pedido_abastecer_detail(request, pk):
+    template_name = 'abastecer/pedido_abastecer_detail.html'
+    obj = Pedido.objects.get(pk=pk, tipo='A')
+
+    if request.method == 'POST':
+        action = request.POST.get('action') 
+        if action == 'pendente':
+            obj.status = 'P'
+            obj.tipo = 'A'
+            obj.save()
+        elif action == 'confirmar':
+            obj.status = 'A' 
+            obj.entregue = True 
+            obj.save()
+        return HttpResponseRedirect(reverse('pedido:pedido_abastecer_list'))
+
+    context = {
+        'object': obj,
     }
     return render(request, template_name, context)

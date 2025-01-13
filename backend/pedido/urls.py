@@ -13,6 +13,7 @@ visitar_patterns = [
 
 abastecer_patterns = [
    path('', v.pedido_abastecer_list, name='pedido_abastecer_list'),
+    path('<int:pk>/', v.pedido_abastecer_detail, name='pedido_abastecer_detail'),
 ]
 
 urlpatterns = [

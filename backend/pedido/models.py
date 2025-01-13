@@ -5,6 +5,10 @@ from backend.usuarios.models import Titular
 from backend.base.models import TimeStampedModel
 
 from .managers import PedidoVisitarManager, PedidoAbastecerManager
+TIPO = [
+        ('V', 'Visita'),
+        ('A', 'Abastecimento'),
+    ]
 
 STATUS = (
     ('V', 'Visitar'),
@@ -25,6 +29,7 @@ class Pedido(TimeStampedModel):
     cisterna = models.CharField('Nº Cisterna', max_length=10, null=True, blank=True)
     volume = models.PositiveIntegerField('Volume', null=True, blank=True)
     status = models.CharField('status', max_length=1, choices=STATUS, default='V')
+    tipo = models.CharField('tipo', max_length=1, choices=TIPO, default='V')
     entregue = models.BooleanField('Entregue', default=False,  blank=True)
 
     class Meta:

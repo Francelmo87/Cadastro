@@ -3,7 +3,7 @@
 {% block content %}
 
   <span class="pull-right">
-    <a href="{% url 'pedido:pedido_visitar_list' %}">
+    <a href="{% url 'pedido:pedido_abastecer_list' %}">
       <button type="button" class="btn btn-danger">
           <span class="fa fa-undo "></span> voltar
       </button>
@@ -11,10 +11,10 @@
   </span>
 
 
-{% if object.status == 'V' %}
-    <h1>Visitar: {{ object }}</h1>
+{% if object.status == 'A' %}
+  <h1>Abastecer: {{ object }}</h1>
 {% elif object.status == 'P' %}
-    <h1>Pendente: {{ object }}</h1>
+  <h1>Pendente: {{ object }}</h1>
 {% endif %}
 
 <div class="col-sm-6">
@@ -40,12 +40,12 @@
   </table>
 </div>
 
-<form method="POST" action="{% url 'pedido:pedido_visitar_detail' object.pk %}">
+<form method="POST" action="{% url 'pedido:pedido_abastecer_detail' object.pk %}">
     {% csrf_token %}   
 
-   {% if object.status == 'V'%}
+   {% if object.status == 'A'%}
     <span class="pull-right">
-      <a href="{% url 'pedido:pedido_visitar_list' %}">
+      <a href="{% url 'pedido:pedido_abastecer_list' %}">
       <button type="submit" name="action" value="confirmar" class="btn btn-success">
             <span class="fa fa-check"></span> Confirmar
         </button>
@@ -53,7 +53,7 @@
     </span>
     
     <span class="pull-right"  >
-      <a href="{% url 'pedido:pedido_visitar_list' %}">
+      <a href="{% url 'pedido:pedido_abastecer_list' %}">
         <button type="submit" name="action" value="pendente" class="btn btn-warning">
             <span class="fa fa-pause"></span> Pendente
         </button>
@@ -61,7 +61,7 @@
     </span>
     {%else%}
     <span class="pull-right">
-      <a href="{% url 'pedido:pedido_visitar_list' %}">
+      <a href="{% url 'pedido:pedido_abastecer_list' %}">
       <button type="submit" name="action" value="confirmar" class="btn btn-success">
             <span class="fa fa-check"></span> Confirmar
         </button>
